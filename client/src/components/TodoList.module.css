@@ -1,0 +1,146 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  height: 100%;
+  background-color: #2e2c2c;
+}
+
+.zagalovok {
+  color: white;
+}
+
+.input {
+  width: 700px;
+  height: 50px;
+  border-radius: 25px;
+  color: white;
+  background-color: rgba(83, 27, 136, 0.973);
+  font-size: 25px;
+  border: 0px;
+  padding: 10px;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.button1 {
+  margin-left: 20px;
+  height: 60px;
+  width: 80px;
+  border-radius: 15px;
+  background-color: rgb(142, 17, 146);
+  color: white;
+  border: 0px;
+}
+
+.button1:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.todos-list {
+  margin-top: 50px;
+}
+
+.text {
+  font-size: 25px;
+  color: white;
+  margin-bottom: 10px;
+  transition: all 0.3s ease; /* Добавьте плавный переход */
+}
+
+.check {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid #2196F3;
+  background-color: #195a8b52;
+  cursor: pointer;
+  position: relative;
+  margin-right: 10px;
+}
+
+.check:checked {
+  background-color: #9C27B0;
+  border-color: #4b1155;
+}
+
+.check:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.check {
+  transition: all 0.3s ease;
+}
+
+.knopka {
+  width: 140px;
+  height: 40px;
+  border-radius: 20px;
+  border: 0px;
+  background-color: rgb(43, 32, 53);
+  color: white;
+  margin-right: 5px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.inizmen {
+  height: 40px;
+  margin-bottom: 10px;
+  font-size: 25px;
+  border-radius: 10px;
+  border: 0px;
+  color: white;
+  background: #68135c;
+  text-align: center;
+}
+
+.logoutButton {
+  margin-left: 60px;
+  height: 60px;
+  width: 80px;
+  border-radius: 15px;
+  background-color: rgb(45, 17, 146);
+  color: white;
+  border: 0px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.todosList {
+  margin-top: 40px;
+}
+
+.todoItem {
+  margin-bottom: 30px;
+}
+
+
+.text.done {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
