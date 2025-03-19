@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useGetTodosQuery, useAddTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation } from '../app/api';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'; // Добавляем импорт
+import { useDispatch } from 'react-redux'; 
 import { api } from '../app/api';
 import a from './TodoList.module.css';
 
 export default function TodoList() {
     const navigate = useNavigate();
-    const dispatch = useDispatch(); // Получаем dispatch
+    const dispatch = useDispatch(); 
     const [newTodo, setNewTodo] = useState({ description: '', done: false });
     const [editTodo, setEditTodo] = useState(null);
 
@@ -58,7 +58,7 @@ export default function TodoList() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    dispatch(api.util.resetApiState()); // Сбрасываем кэш RTK Query
+    dispatch(api.util.resetApiState()); 
     navigate('/login');
   };
 

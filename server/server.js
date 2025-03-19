@@ -11,7 +11,6 @@ dotenv.config();
 const app = express();
 const PORT = 5000;
 
-// Подключение к PostgreSQL
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -23,7 +22,6 @@ const pool = new Pool({
 app.use(cors());
 app.use(express.json());
 
-// Middleware для проверки JWT
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -41,7 +39,6 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-// Регистрация пользователя
 app.post('/api/register', async (req, res) => {
   const { username, password, email } = req.body;
 
@@ -66,17 +63,16 @@ app.post('/api/register', async (req, res) => {
   } catch (err) {
     res.status(500).json({ 
       error: err.message,
-      detail: err.detail // Добавляем детали ошибки из PostgreSQL
+      detail: err.detail 
     });
   }
 });
 
-// Вход пользователя
+
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Поиск пользователя
     const userResult = await pool.query(
       'SELECT * FROM users WHERE username = $1', 
       [username]
@@ -88,13 +84,11 @@ app.post('/api/login', async (req, res) => {
 
     const user = userResult.rows[0];
     
-    // Проверка пароля
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // Генерация JWT
     const token = jwt.sign(
       { userId: user.id }, 
       process.env.JWT_SECRET, 
@@ -107,7 +101,6 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Получение задач пользователя
 app.get('/api/todos', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM tasks WHERE user_id = $1', [req.user.userId]);
@@ -117,7 +110,6 @@ app.get('/api/todos', authenticateToken, async (req, res) => {
   }
 });
 
-// Создание задачи
 app.post('/api/todos', authenticateToken, async (req, res) => {
   const { description, done } = req.body;
 
@@ -132,7 +124,6 @@ app.post('/api/todos', authenticateToken, async (req, res) => {
   }
 });
 
-// Обновление задачи
 app.put('/api/todos/:id', authenticateToken, async (req, res) => {
   const { description, done } = req.body;
 
@@ -152,7 +143,6 @@ app.put('/api/todos/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// Удаление задачи
 app.delete('/api/todos/:id', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query(
@@ -170,7 +160,6 @@ app.delete('/api/todos/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// Запуск сервера
 app.listen(PORT, () => {
   console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

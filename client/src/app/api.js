@@ -13,7 +13,6 @@ export const api = createApi({
   }),
   tagTypes: ['Todos'],
   endpoints: (builder) => ({
-    // Регистрация пользователя
     register: builder.mutation({
       query: (credentials) => ({
         url: '/register',
@@ -22,7 +21,6 @@ export const api = createApi({
       }),
     }),
 
-    // Авторизация пользователя
     login: builder.mutation({
       query: (credentials) => ({
         url: '/login',
@@ -31,18 +29,15 @@ export const api = createApi({
       }),
     }),
 
-    // Получение списка задач
     getTodos: builder.query({
         query: () => '/todos',
         providesTags: ['Todos'],
-        // Добавляем обработку ошибок
         transformErrorResponse: (response) => {
           return { message: response.data?.error || 'Failed to fetch todos' };
         },
     }),
       
 
-    // Добавление новой задачи
     addTodo: builder.mutation({
         query: (todo) => ({
           url: '/todos',
@@ -52,11 +47,9 @@ export const api = createApi({
             done: todo.done || false 
           },
         }),
-        // Автоматический рефетч после успешного добавления
         invalidatesTags: ['Todos'],
       }),
 
-    // Обновление задачи
     updateTodo: builder.mutation({
       query: ({ id, ...patch }) => ({
         url: `/todos/${id}`,
@@ -66,7 +59,6 @@ export const api = createApi({
       invalidatesTags: ['Todos'],
     }),
 
-    // Удаление задачи
     deleteTodo: builder.mutation({
       query: (id) => ({
         url: `/todos/${id}`,
